@@ -63,6 +63,10 @@
   .other-month {
     color: #999;
   }
+  .other-month:hover {
+    background-color: rgb(228, 188, 112);
+    color: white;
+  }
 
   .date-picker table {
     border-collapse: collapse;
