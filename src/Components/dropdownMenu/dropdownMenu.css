@@ -12,20 +12,20 @@
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
-    width: 100%; /* Largeur personnalisable */
+    width: 100%; 
     text-align: left;
   }
   
 .dropdown-toggle::after {
     content: "";
     position: absolute;
-    right: 10px; /* Ajustez la position horizontale */
-    top: 50%; /* Centre verticalement */
-    transform: translateY(-50%); /* Pour centrer verticalement */
+    right: 10px;
+    top: 50%; 
+    transform: translateY(-50%); 
     border-width: 5px;
     border-style: solid;
-    border-color: #7d7878 transparent transparent transparent; /* Triangle vers le bas */
-    pointer-events: none; /* Évite l'interaction avec le triangle */
+    border-color: #7d7878 transparent transparent transparent;
+    pointer-events: none; 
   }
 
   .dropdown-toggle:hover {

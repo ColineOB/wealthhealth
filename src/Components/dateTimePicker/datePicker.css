@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Assure que les bordures et le padding ne dépassent pas la taille des éléments */
+  }
+
+.date-picker {
+    margin: 0 auto;
+    padding: 8px;
+    padding-top: 2px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.506);
+    background-color: #fff;
+    z-index: 9999;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header button {
+    background-color: white;
+    color: #c5c5c5;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .header button:hover {
+    color: black;
+  }
+  
+  .day {
+    background-color: #f1f1f1;
+    color: #666;
+    height: 25px;
+    justify-content: right;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ddd ;
+    transition: background-color 0.3s;
+  }
+  
+  .day:hover {
+    background-color: orange;
+    color: white;
+  }
+  
+  .selected {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .today {
+    color: #007bff;
+  }
+  .other-month {
+    color: #999;
+  }
+
+  .date-picker table {
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .date-picker th {
+    width: 32px;
+    height: 25px;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+    color: #999;
+    border: 1px solid #ddd ;
+    background-color: #f1f1f1;
+  }
+  
+  .date-picker td {
+    text-align: right;
+    padding-right: 3px;
+  }

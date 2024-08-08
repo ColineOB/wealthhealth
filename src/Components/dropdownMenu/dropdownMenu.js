@@ -9,7 +9,6 @@ const Dropdown = ({ items }) => {
   const dropdownRef = useRef(null)
 
   const toggleDropdown = () => {
-    console.log('Toggle Dropdown')
     setIsOpen((prev) => !prev)
   }
 
@@ -20,9 +19,7 @@ const Dropdown = ({ items }) => {
   }
 
   const handleClickOutside = (event) => {
-    console.log('Clicked outside', event.target)
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      console.log('Closing dropdown')
       setIsOpen(false)
     }
   }
