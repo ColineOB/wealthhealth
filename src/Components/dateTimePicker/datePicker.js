@@ -1,31 +1,31 @@
 import React, { useState } from 'react'
 import './datePicker.css'
+import { useEffect } from 'react'
 
 const DatePicker = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const todayDate = new Date()
+  const todayYear = new Date().getFullYear()
 
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
   const datNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  console.log(currentYear)
 
-  const getMonthName = (monthIndex) => {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ]
-    return monthNames[monthIndex]
-  }
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
 
   //number of days in a month
   const getDaysInMonth = (month, year) => {
@@ -70,6 +70,11 @@ const DatePicker = () => {
         </td>
       )
     }
+    console.log(
+      selectedDate.getDate(),
+      selectedDate.getMonth(),
+      selectedDate.getFullYear()
+    )
 
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(
@@ -80,7 +85,9 @@ const DatePicker = () => {
             selectedDate.getMonth() === currentMonth &&
             selectedDate.getFullYear() === currentYear
               ? 'selected'
-              : todayDate.getDate() === day
+              : todayDate.getDate() === day &&
+                  todayDate.getMonth() === currentMonth &&
+                  todayDate.getFullYear() === currentYear
                 ? 'today'
                 : ''
           }`}
@@ -92,10 +99,8 @@ const DatePicker = () => {
     }
 
     const totalCells = days.length
-    console.log('totalCells', totalCells)
 
     const nextMonthDays = (7 - (totalCells % 7)) % 7
-    console.log('nextMonthDays', nextMonthDays)
 
     for (let i = 1; i <= nextMonthDays; i++) {
       days.push(
@@ -113,12 +118,42 @@ const DatePicker = () => {
     return weeks.map((week, index) => <tr key={index}>{week}</tr>)
   }
 
+  const yearsList = () => {
+    const finalYear = 1899
+    const years = []
+    const nbYears = todayYear - finalYear
+
+    for (let i = 0; i < nbYears; i++) {
+      let year = todayYear - i
+      years.push(<option value={year}>{year}</option>)
+    }
+    return years
+  }
+
+  // useEffect(() => {
+  //   setSelectedDate(new Date(currentYear, currentMonth, selectedDate.getDate()))
+  // }, [currentMonth, currentYear])
+
   return (
     <div className='date-picker'>
       <div className='header'>
         <button onClick={handlePrevMonth}>{'◄'}</button>
         <div>
-          {getMonthName(currentMonth)} {currentYear}
+          <select onChange={(e) => setCurrentMonth(e.target.value)}>
+            {monthNames.map((month, index) =>
+              index === currentMonth ? (
+                <option value={index} selected>
+                  {month}
+                </option>
+              ) : (
+                <option value={index}> {month} </option>
+              )
+            )}
+          </select>
+          <select onChange={(e) => setCurrentYear(e.target.value)}>
+            {yearsList()}
+          </select>
+          {/* {getMonthName(currentMonth)} {currentYear} */}
         </div>
         <button onClick={handleNextMonth}>{'►'}</button>
       </div>

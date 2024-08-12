@@ -1,5 +1,5 @@
 import './App.css'
-// import Modal from 'modal-react-cc';
+import Modal from 'modal-react-cc'
 import { useEffect, useState } from 'react'
 import DatePicker from './Components/dateTimePicker/datePicker'
 import state from './lists/states'
@@ -7,14 +7,14 @@ import department from './lists/departments'
 import Dropdown from './Components/dropdownMenu/dropdownMenu'
 
 function App() {
-  // const [open, setOpen] = useState(false)
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
+  const [open, setOpen] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
 
-  // useEffect(() => {
-  //   console.log(open)
-  // }, [open])
+  useEffect(() => {
+    console.log(open)
+  }, [open])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -69,10 +69,10 @@ function App() {
         </label>
       </form>
       <DatePicker></DatePicker>
-      {/* <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose}>
         text
-        </Modal>
-        <button onClick={() => setOpen(true)}>Save</button> */}
+      </Modal>
+      <button onClick={() => setOpen(true)}>Save</button>
     </div>
   )
 }
