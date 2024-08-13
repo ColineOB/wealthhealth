@@ -1,10 +1,10 @@
 import './App.css'
 import Modal from 'modal-react-cc'
 import { useEffect, useState } from 'react'
-import DatePicker from './Components/dateTimePicker/datePicker'
 import state from './lists/states'
 import department from './lists/departments'
 import Dropdown from './Components/dropdownMenu/dropdownMenu'
+import DateInput from './Components/dateTimePicker/dateInput'
 
 function App() {
   const [open, setOpen] = useState(false)
@@ -36,12 +36,12 @@ function App() {
         </label>
         <label>
           Date of Birth
-          <input type='text' name='Date of Birth' />
+          <DateInput />
         </label>
 
         <label>
           Start Date
-          <input type='text' name='Start Date' />
+          <DateInput />
         </label>
         <fieldset>
           <legend>Address</legend>
@@ -68,7 +68,6 @@ function App() {
           <Dropdown items={department} />
         </label>
       </form>
-      <DatePicker></DatePicker>
       <Modal open={open} onClose={handleClose}>
         text
       </Modal>

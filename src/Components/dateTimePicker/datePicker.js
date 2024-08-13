@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import './datePicker.css'
-import { useEffect } from 'react'
 
-const DatePicker = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date())
+const DatePicker = ({ selectedDate, setSelectedDate }) => {
+  const initialDate = selectedDate || new Date()
+
   const todayDate = new Date()
-  const todayYear = new Date().getFullYear()
+  const todayYear = todayDate.getFullYear()
 
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+  const [currentMonth, setCurrentMonth] = useState(initialDate.getMonth())
+  const [currentYear, setCurrentYear] = useState(initialDate.getFullYear())
+
   const datNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  console.log(currentYear)
-
   const monthNames = [
     'January',
     'February',
@@ -27,12 +26,10 @@ const DatePicker = () => {
     'December'
   ]
 
-  //number of days in a month
   const getDaysInMonth = (month, year) => {
     return new Date(year, month + 1, 0).getDate()
   }
 
-  // change month
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11)
@@ -70,20 +67,15 @@ const DatePicker = () => {
         </td>
       )
     }
-    console.log(
-      selectedDate.getDate(),
-      selectedDate.getMonth(),
-      selectedDate.getFullYear()
-    )
 
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(
         <td
           key={day}
           className={`day ${
-            selectedDate.getDate() === day &&
-            selectedDate.getMonth() === currentMonth &&
-            selectedDate.getFullYear() === currentYear
+            initialDate.getDate() === day &&
+            initialDate.getMonth() === currentMonth &&
+            initialDate.getFullYear() === currentYear
               ? 'selected'
               : todayDate.getDate() === day &&
                   todayDate.getMonth() === currentMonth &&
@@ -99,7 +91,6 @@ const DatePicker = () => {
     }
 
     const totalCells = days.length
-
     const nextMonthDays = (7 - (totalCells % 7)) % 7
 
     for (let i = 1; i <= nextMonthDays; i++) {
@@ -125,49 +116,60 @@ const DatePicker = () => {
 
     for (let i = 0; i < nbYears; i++) {
       let year = todayYear - i
-      years.push(<option value={year}>{year}</option>)
+      years.push(
+        <option key={year} value={year} selected={currentYear === year}>
+          {year}
+        </option>
+      )
     }
     return years
   }
 
-  // useEffect(() => {
-  //   setSelectedDate(new Date(currentYear, currentMonth, selectedDate.getDate()))
-  // }, [currentMonth, currentYear])
+  const returnToday = () => {
+    setSelectedDate(todayDate)
+    setCurrentMonth(todayDate.getMonth())
+    setCurrentYear(todayDate.getFullYear())
+    renderDays()
+  }
 
   return (
     <div className='date-picker'>
       <div className='header'>
         <button onClick={handlePrevMonth}>{'◄'}</button>
         <div>
-          <select onChange={(e) => setCurrentMonth(e.target.value)}>
-            {monthNames.map((month, index) =>
-              index === currentMonth ? (
-                <option value={index} selected>
-                  {month}
-                </option>
-              ) : (
-                <option value={index}> {month} </option>
-              )
-            )}
+          <button onClick={returnToday}>{'⌂'}</button>
+          <select
+            value={currentMonth}
+            onChange={(e) => setCurrentMonth(Number(e.target.value))}
+          >
+            {monthNames.map((month, index) => (
+              <option key={index} value={index}>
+                {month}
+              </option>
+            ))}
           </select>
-          <select onChange={(e) => setCurrentYear(e.target.value)}>
+          <select
+            value={currentYear}
+            onChange={(e) => setCurrentYear(Number(e.target.value))}
+          >
             {yearsList()}
           </select>
-          {/* {getMonthName(currentMonth)} {currentYear} */}
         </div>
         <button onClick={handleNextMonth}>{'►'}</button>
       </div>
       <table>
         <thead>
           <tr>
-            {datNames.map((datName) => (
-              <th>{datName}</th>
+            {datNames.map((datName, index) => (
+              <th key={index}>{datName}</th>
             ))}
           </tr>
         </thead>
         <tbody>{renderDays()}</tbody>
       </table>
-      <p>{selectedDate.toLocaleDateString()}</p>
+      <p>
+        {selectedDate ? selectedDate.toLocaleDateString() : 'No date selected'}
+      </p>
     </div>
   )
 }
