@@ -26,47 +26,29 @@ function App() {
       <a href='/employee-list'>View Current Employees</a>
       <h2>Create Employee</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name
-          <input type='text' name='first Name' />
-        </label>
-        <label>
-          Last Name
-          <input type='text' name='Last Name' />
-        </label>
-        <label>
-          Date of Birth
-          <DateInput />
-        </label>
+        <label>First Name</label>
+        <input type='text' name='first Name' />
+        <label>Last Name</label>
+        <input type='text' name='Last Name' />
+        <label>Date of Birth</label>
+        <DateInput />
 
-        <label>
-          Start Date
-          <DateInput />
-        </label>
+        <label>Start Date</label>
+        <DateInput />
         <fieldset>
           <legend>Address</legend>
-          <label>
-            Street
-            <input type='text' name='street' />
-          </label>
-          <label>
-            City
-            <input type='text' name='city' />
-          </label>
-          <label>
-            State
-            <Dropdown items={state} />
-          </label>
-          <label>
-            Zip Code
-            <input type='number' name='zip code' />
-          </label>
+          <label>Street</label>
+          <input type='text' name='street' />
+          <label>City</label>
+          <input type='text' name='city' />
+          <label>State</label>
+          <Dropdown items={state} />
+          <label>Zip Code</label>
+          <input type='number' name='zip code' />
         </fieldset>
 
-        <label>
-          Department
-          <Dropdown items={department} />
-        </label>
+        <label>Department</label>
+        <Dropdown items={department} />
       </form>
       <Modal open={open} onClose={handleClose}>
         text
