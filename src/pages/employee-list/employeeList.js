@@ -8,7 +8,8 @@ import React, { useState } from 'react'
 
 function EmployeeList() {
   const columnHelper = createColumnHelper()
-  const [data, _setData] = useState()
+  const [data, _setData] = useState([])
+
   const columns = [
     columnHelper.accessor('First Name', {
       cell: (info) => info.getValue()
@@ -63,7 +64,17 @@ function EmployeeList() {
             </tr>
           ))}
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
         <tfoot></tfoot>
       </table>
     </div>

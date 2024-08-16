@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { RouterProvider, Route, Routes } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import EmployeeList from './pages/employee-list/employeeList'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <RouterProvider>
+    <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/employee-list' element={<EmployeeList />} />
       </Routes>
-    </RouterProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )
 
