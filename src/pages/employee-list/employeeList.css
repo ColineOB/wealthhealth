@@ -1,0 +1,57 @@
+.listEmployee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.listEmployee h1 {
+    margin-top: 10px;
+}
+
+.listEmployee-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%; 
+    margin: 20px 0;
+    padding: 0 20px; 
+}
+
+.listEmployee-option select {
+    padding: 5px;
+    margin: 0 8px;
+}
+
+.listEmployee-option input {
+    margin-left: 8px;
+}
+
+.listEmployee table {
+    width: 60%;
+    border-collapse: collapse;
+
+}
+
+.listEmployee-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%; 
+    padding: 0 20px; 
+}
+
+.listEmployee-pagination span {
+    margin: 0 10px;
+}
+
+.listEmployee-pagination strong {
+    margin: 0 5px;
+}
+
+.listEmployee table th, .listEmployee table td {
+    border: 1px solid #616161; 
+    padding: 8px;
+    text-align: left;
+}

@@ -3,9 +3,11 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  useReactTable
+  useReactTable,
+  getPaginationRowModel
 } from '@tanstack/react-table'
 import React, { useMemo, useState } from 'react'
+import './employeeList.css'
 
 function EmployeeList() {
   const columnHelper = createColumnHelper()
@@ -34,6 +36,7 @@ function EmployeeList() {
     }
   ])
   const [searchTerm, setSearchTerm] = useState('')
+  const [pageSize, setPageSize] = useState(10)
 
   const filteredData = useMemo(() => {
     return data.filter((row) => {
@@ -91,18 +94,45 @@ function EmployeeList() {
     },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: pageSize
+      }
+    }
   })
 
   return (
-    <div>
-      <input
-        type='text'
-        placeholder='Search...'
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: '10px', padding: '5px', width: '200px' }}
-      />
+    <div className='listEmployee'>
+      <h1>Current Employees</h1>
+      <div className='listEmployee-option'>
+        <div>
+          Show
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value))
+              table.setPageSize(Number(e.target.value))
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+          entries
+        </div>
+        <div>
+          Search:
+          <input
+            type='text'
+            placeholder='Search...'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -111,7 +141,6 @@ function EmployeeList() {
                 <th
                   key={header.id}
                   onClick={header.column.getToggleSortingHandler()}
-                  style={{ cursor: 'pointer' }}
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -139,6 +168,29 @@ function EmployeeList() {
         </tbody>
         <tfoot></tfoot>
       </table>
+      <div className='listEmployee-pagination'>
+        <div>
+          Showing {table.getPageCount()} to {table.getRowModel().rows.length} of{' '}
+          {filteredData.length} entries
+        </div>
+        <div>
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </button>
+          <span>
+            <strong>{table.getState().pagination.pageIndex + 1}</strong>{' '}
+          </span>
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
