@@ -117,7 +117,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
     for (let i = 0; i < nbYears; i++) {
       let year = todayYear - i
       years.push(
-        <option key={year} value={year} selected={currentYear === year}>
+        <option key={year} value={year}>
           {year}
         </option>
       )

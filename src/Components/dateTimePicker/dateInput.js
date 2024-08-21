@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import DatePicker from './datePicker'
 
-const DateInput = () => {
+const DateInput = ({ onChange }) => {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [showDatePicker, setShowDatePicker] = useState(false)
   const inputRef = useRef(null)
 
   const handleDateChange = (date) => {
     setSelectedDate(date)
+    if (onChange) {
+      onChange(date)
+    }
+    setShowDatePicker(false)
   }
 
   const handleInputClick = () => {

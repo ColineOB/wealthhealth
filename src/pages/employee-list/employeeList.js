@@ -6,37 +6,37 @@ import {
   useReactTable,
   getPaginationRowModel
 } from '@tanstack/react-table'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import './employeeList.css'
 
 function EmployeeList() {
   const columnHelper = createColumnHelper()
-  const [data, setData] = useState([
-    {
-      'First Name': 'John',
-      'Last Name': 'Doe',
-      'start Date': '2023-01-01',
-      Department: 'HR',
-      'Date of birth': '1990-01-01',
-      Street: 'Main St',
-      City: 'New York',
-      State: 'NY',
-      'zip code': '10001'
-    },
-    {
-      'First Name': 'Jane',
-      'Last Name': 'Smith',
-      'start Date': '2023-02-01',
-      Department: 'Finance',
-      'Date of birth': '1985-02-02',
-      Street: '2nd St',
-      City: 'San Francisco',
-      State: 'CA',
-      'zip code': '94103'
-    }
-  ])
+  const [data, setData] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [pageSize, setPageSize] = useState(10)
+
+  useEffect(() => {
+    const employeeData = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key.startsWith('employeeFormData-')) {
+        const employee = JSON.parse(localStorage.getItem(key))
+        employeeData.push({
+          'First Name': employee.firstName,
+          'Last Name': employee.lastName,
+          'Start Date': employee.startDate,
+          Department: employee.department,
+          'Date of Birth': employee.dateOfBirth,
+          Street: employee.street,
+          City: employee.city,
+          State: employee.state,
+          'Zip Code': employee.zipCode
+        })
+      }
+    }
+
+    setData(employeeData)
+  }, [])
 
   const filteredData = useMemo(() => {
     return data.filter((row) => {
