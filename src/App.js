@@ -1,45 +1,21 @@
 import './App.css'
 import Modal from 'modal-react-cc'
-import { useState } from 'react'
+import { useContext } from 'react'
 import state from './lists/states'
 import department from './lists/departments'
 import Dropdown from './Components/dropdownMenu/dropdownMenu'
 import DateInput from './Components/dateTimePicker/dateInput'
+import { FormContext } from './Context/formProvider'
 
 function App() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    startDate: '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    department: ''
-  })
-  const [open, setOpen] = useState(false)
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const uniqueId = Date.now()
-    localStorage.setItem(
-      `employeeFormData-${uniqueId}`,
-      JSON.stringify(formData)
-    )
-    setOpen(true)
-  }
+  const {
+    formData,
+    handleInputChange,
+    handleSubmit,
+    open,
+    handleClose,
+    setFormData
+  } = useContext(FormContext)
 
   return (
     <div className='App'>

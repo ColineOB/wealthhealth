@@ -6,45 +6,21 @@ import {
   useReactTable,
   getPaginationRowModel
 } from '@tanstack/react-table'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext } from 'react'
 import './employeeList.css'
+import { TableContext } from '../../Context/tableProvider'
 
 function EmployeeList() {
   const columnHelper = createColumnHelper()
-  const [data, setData] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [pageSize, setPageSize] = useState(10)
-
-  useEffect(() => {
-    const employeeData = []
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key.startsWith('employeeFormData-')) {
-        const employee = JSON.parse(localStorage.getItem(key))
-        employeeData.push({
-          'First Name': employee.firstName,
-          'Last Name': employee.lastName,
-          'Start Date': employee.startDate,
-          Department: employee.department,
-          'Date of Birth': employee.dateOfBirth,
-          Street: employee.street,
-          City: employee.city,
-          State: employee.state,
-          'Zip Code': employee.zipCode
-        })
-      }
-    }
-
-    setData(employeeData)
-  }, [])
-
-  const filteredData = useMemo(() => {
-    return data.filter((row) => {
-      return Object.values(row).some((value) =>
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    })
-  }, [data, searchTerm])
+  const {
+    filteredData,
+    searchTerm,
+    setSearchTerm,
+    pageSize,
+    setPageSize,
+    sorting,
+    setSorting
+  } = useContext(TableContext)
 
   const columns = [
     columnHelper.accessor('First Name', {
@@ -56,7 +32,7 @@ function EmployeeList() {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     }),
-    columnHelper.accessor('start Date', {
+    columnHelper.accessor('Start Date', {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     }),
@@ -64,7 +40,7 @@ function EmployeeList() {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     }),
-    columnHelper.accessor('Date of birth', {
+    columnHelper.accessor('Date of Birth', {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     }),
@@ -80,12 +56,12 @@ function EmployeeList() {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     }),
-    columnHelper.accessor('zip code', {
+    columnHelper.accessor('Zip Code', {
       cell: (info) => info.getValue(),
       sortingFn: 'alphanumeric'
     })
   ]
-  const [sorting, setSorting] = useState([])
+
   const table = useReactTable({
     data: filteredData,
     columns,
