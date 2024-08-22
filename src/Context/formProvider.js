@@ -1,4 +1,6 @@
 import React, { createContext, useState } from 'react'
+import state from '../lists/states'
+import department from '../lists/departments'
 
 export const FormContext = createContext()
 
@@ -28,19 +30,23 @@ export const FormProvider = ({ children }) => {
     })
   }
 
+  function date(dateNow) {
+    return dateNow || new Date()
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const uniqueId = Date.now()
     const employeeData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
-      dateOfBirth: formData.dateOfBirth,
-      startDate: formData.startDate,
+      dateOfBirth: date(formData.dateOfBirth),
+      startDate: date(formData.startDate),
       street: formData.street,
       city: formData.city,
-      state: formData.state,
+      state: formData.state || state[0],
       zipCode: formData.zipCode.toString(),
-      department: formData.department
+      department: formData.department || department[0]
     }
     localStorage.setItem(
       `employeeFormData-${uniqueId}`,

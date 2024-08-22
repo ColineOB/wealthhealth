@@ -73,6 +73,7 @@ function EmployeeList() {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
+      sorting: [{ id: 'defaultColumnId', desc: false }],
       pagination: {
         pageSize: pageSize
       }
@@ -114,18 +115,33 @@ function EmployeeList() {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  {{
-                    asc: ' ▲',
-                    desc: ' ▼'
-                  }[header.column.getIsSorted()] ?? null}
+                <th key={header.id}>
+                  <div className='sort-wrapper'>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    <div className='sort-icons'>
+                      <span
+                        className={`sort-icon ${header.column.getIsSorted() === 'asc' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          header.column.toggleSorting(false)
+                        }}
+                      >
+                        ▲
+                      </span>
+                      <span
+                        className={`sort-icon ${header.column.getIsSorted() === 'desc' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          header.column.toggleSorting(true)
+                        }}
+                      >
+                        ▼
+                      </span>
+                    </div>
+                  </div>
                 </th>
               ))}
             </tr>

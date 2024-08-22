@@ -9,7 +9,8 @@ export const TableProvider = ({ children }) => {
   const [sorting, setSorting] = useState([])
 
   function formatDate(dateString) {
-    const date = new Date(dateString)
+    let dateS = dateString
+    const date = new Date(dateS)
     const day = String(date.getDate()).padStart(2, '0')
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const year = date.getFullYear()
