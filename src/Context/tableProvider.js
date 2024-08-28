@@ -18,25 +18,24 @@ export const TableProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    const employeeData = []
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key.startsWith('employeeFormData-')) {
-        const employee = JSON.parse(localStorage.getItem(key))
-        employeeData.push({
-          'First Name': employee.firstName || 'unknown',
-          'Last Name': employee.lastName || 'unknown',
-          'Start Date': formatDate(employee.startDate) || 'unknown',
-          Department: employee.department || 'unknown',
-          'Date of Birth': formatDate(employee.dateOfBirth) || 'unknown',
-          Street: employee.street || 'unknown',
-          City: employee.city || 'unknown',
-          State: employee.state || 'unknown',
-          'Zip Code': employee.zipCode || '00000'
-        })
-      }
+    const storedEmployees = JSON.parse(localStorage.getItem('employeeFormData'))
+
+    if (Array.isArray(storedEmployees)) {
+      const employeeData = storedEmployees.map((employee) => ({
+        'First Name': employee.firstName || 'unknown',
+        'Last Name': employee.lastName || 'unknown',
+        'Start Date': formatDate(employee.startDate) || 'unknown',
+        Department: employee.department || 'unknown',
+        'Date of Birth': formatDate(employee.dateOfBirth) || 'unknown',
+        Street: employee.street || 'unknown',
+        City: employee.city || 'unknown',
+        State: employee.state || 'unknown',
+        'Zip Code': employee.zipCode || '00000'
+      }))
+      setData(employeeData)
+    } else {
+      setData([])
     }
-    setData(employeeData)
   }, [])
 
   const filteredData = useMemo(() => {

@@ -36,8 +36,13 @@ export const FormProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const uniqueId = Date.now()
+    let storedEmployees = JSON.parse(localStorage.getItem('employeeFormData'))
+    if (!Array.isArray(storedEmployees)) {
+      storedEmployees = []
+    }
+    const newId = storedEmployees.length + 1
     const employeeData = {
+      id: newId,
       firstName: formData.firstName,
       lastName: formData.lastName,
       dateOfBirth: date(formData.dateOfBirth),
@@ -48,10 +53,8 @@ export const FormProvider = ({ children }) => {
       zipCode: formData.zipCode.toString(),
       department: formData.department || department[0]
     }
-    localStorage.setItem(
-      `employeeFormData-${uniqueId}`,
-      JSON.stringify(employeeData)
-    )
+    storedEmployees.push(employeeData)
+    localStorage.setItem('employeeFormData', JSON.stringify(storedEmployees))
     setOpen(true)
   }
 
