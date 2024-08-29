@@ -63,7 +63,7 @@ function App() {
         <button type='submit'>Save</button>
       </form>
       <Modal open={open} onClose={handleClose}>
-        text
+        Employee Created!
       </Modal>
     </div>
   )
