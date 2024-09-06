@@ -30,7 +30,8 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
     return new Date(year, month + 1, 0).getDate()
   }
 
-  const handlePrevMonth = () => {
+  const handlePrevMonth = (event) => {
+    event.preventDefault()
     if (currentMonth === 0) {
       setCurrentMonth(11)
       setCurrentYear(currentYear - 1)
@@ -39,7 +40,8 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
     }
   }
 
-  const handleNextMonth = () => {
+  const handleNextMonth = (event) => {
+    event.preventDefault()
     if (currentMonth === 11) {
       setCurrentMonth(0)
       setCurrentYear(currentYear + 1)

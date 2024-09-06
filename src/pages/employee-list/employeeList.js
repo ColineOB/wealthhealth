@@ -22,6 +22,11 @@ function EmployeeList() {
     setSorting
   } = useContext(TableContext)
 
+  const parseDateString = (dateString) => {
+    const [day, month, year] = dateString.split('/')
+    return new Date(year, month - 1, day)
+  }
+
   const columns = [
     columnHelper.accessor('First Name', {
       cell: (info) => info.getValue(),
@@ -34,7 +39,11 @@ function EmployeeList() {
     }),
     columnHelper.accessor('Start Date', {
       cell: (info) => info.getValue(),
-      sortingFn: 'alphanumeric'
+      sortingFn: (rowA, rowB, columnId) => {
+        const dateA = parseDateString(rowA.getValue(columnId))
+        const dateB = parseDateString(rowB.getValue(columnId))
+        return dateA - dateB
+      }
     }),
     columnHelper.accessor('Department', {
       cell: (info) => info.getValue(),
@@ -42,7 +51,11 @@ function EmployeeList() {
     }),
     columnHelper.accessor('Date of Birth', {
       cell: (info) => info.getValue(),
-      sortingFn: 'alphanumeric'
+      sortingFn: (rowA, rowB, columnId) => {
+        const dateA = parseDateString(rowA.getValue(columnId))
+        const dateB = parseDateString(rowB.getValue(columnId))
+        return dateA - dateB
+      }
     }),
     columnHelper.accessor('Street', {
       cell: (info) => info.getValue(),
